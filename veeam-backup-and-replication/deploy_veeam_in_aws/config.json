@@ -1,0 +1,76 @@
+{
+    "Default": {
+            "Path":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit",
+            "ChefPath":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\veeam_standalone_full\\",
+            "TFOutputVBR":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\vbr_ip.json",
+            "AWSDeployPath":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\aws_create_veeamrepo_veeampn\\",
+            "LinuxRepoBuildPath":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\veeam_linux_repo\\",
+            "LinuxRepoIP":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\ip.json"
+        },
+    "SOBRRepo": {
+            "AWSAccesskey":"",
+            "AWSSecretkey":"",
+            "S3Folder": "ct03new",
+            "S3Bucket":"veeam-ps-ct03",
+            "ObjectStorageRepoName":"AWS-CT-03",
+            "ObjectStorageRepoLimit":"1024000",
+            "RepoName":"SOBR-01",
+            "RepoExtent1":"",
+            "RepoPath1":"",
+            "RestoreWindow":"30"
+        },
+    "LinuxRepo": {
+            "VBRServer":"localhost",
+            "IpAddress":"",
+            "Username": "centos",
+            "Key":"C:\\Users\\anthonyspiteri\\Documents\\automation\\deploy_veeam_sddc_toolkit\\aws_create_veeamrepo_veeampn\\KEY-VEEAM-03.pem",
+            "RepoName":"AWS-US-1-REPO-01",
+            "RepoFolder":"/home/repo01",
+            "LocalRepoName":"LINUX-REPO-01",
+            "LocalUsername":"root",
+            "LocalPassword":"Veeam1!"
+        },
+    "VCCProvider": {
+            "VBRServer":"192.168.1.55",
+            "vCenterServer":"VCENTER",
+            "vCenterDVS":"LAB-DVS-00",
+            "vCenterPortGroup":"VM-Management",
+            "vCenterDatastore":"HDD-1",
+            "vCenterResPool":"SDDC",
+            "ESXiHost":"ESXiHOST",
+            "CCUserName":"VCC_USERNAME",
+            "CCPassword":"VCC_PASSWORD",
+            "CCServerAddress":"VCC_ENDPOINT",
+            "CCRepoName":"VCC_REPO",
+            "CCPort":"6180",
+            "NEAIPAddress":"192.168.1.239",
+            "NEASubnetMask":"255.255.255.0",
+            "NEAGateway":"192.168.1.254"
+        },
+    "VBRCredentials": {
+            "VBRServer":"VBRIP",
+            "Username":"USERNAME",
+            "Password":"PASSWORD"
+        },
+    "VMCCredentials": {
+            "vCenter":"VCENTER",
+            "Username":"administrator@vsphere.local",
+            "Password":"PASSWORD"
+        },
+    "VBRJobDetails": {
+            "DefaultRepo1":"Default Backup Repository",
+            "Job1":"CCR-01",
+            "Job2":"CCB-02",    
+            "Job3":"CCB-03",
+            "TagCatagory1":"Backup",
+            "TagCatagory2":"Replication",
+            "Tag1":"TIER-1",
+            "Tag2":"TIER-2",
+            "Tag3":"TIER-3",
+            "FullDay":"Friday",
+            "Time1":"22:00",
+            "Time2":"02:00",
+            "RestorePoints1":"7",
+            "RestorePoints2":"30"
+        }
+}
