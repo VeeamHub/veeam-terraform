@@ -1,4 +1,4 @@
-# DEPLOY VEEAM SDDC TOOLKIT
+# Deploy Veeam in VMware SDDC Toolkit
 
 ![alt text](http://anthonyspiteri.net/wp-content/uploads/2019/03/Veeam_SDDC_Deployment_Toolkit_2.png "Overall Solution")
 
