@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListAllMyBuckets",
+                "s3:ListBucket",
+                "s3:PutObject",
+                "s3:RestoreObject",
+                "ec2:DescribeRegions",
+                "iam:GetContextKeysForPrincipalPolicy",
+                "iam:SimulatePrincipalPolicy",
+                "s3:ListAllMyBuckets",
+                "kms:Decrypt",
+                "kms:DescribeKey",
+                "kms:Encrypt",
+                "kms:ListAliases",
+                "kms:ListKeys"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

@@ -11,6 +11,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+*.terraform.*
 
 # .tfvars files
 #*.tfvars

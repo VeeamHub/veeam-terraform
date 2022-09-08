@@ -1,0 +1,103 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "backup:CopyFromBackupVault",
+                "backup:CopyIntoBackupVault",
+                "backup:DeleteRecoveryPoint",
+                "backup:DescribeBackupJob",
+                "backup:DescribeCopyJob",
+                "backup:DescribeRecoveryPoint",
+                "backup:ListBackupVaults",
+                "backup:ListRecoveryPointsByBackupVault",
+                "backup:ListTags",
+                "backup:StartBackupJob",
+                "backup:StartCopyJob",
+                "backup:StopBackupJob",
+                "backup:TagResource",
+                "backup:UntagResource",
+                "ec2:CreateKeyPair",
+                "ec2:DeleteKeyPair",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeImages",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeNetworkInterfaceAttribute",
+                "ec2:DescribeRegions",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeVpcEndpoints",
+                "ec2:DescribeVpcs",
+                "ec2:RunInstances",
+                "elasticfilesystem:Backup",
+                "elasticfilesystem:DescribeAccessPoints",
+                "elasticfilesystem:DescribeBackupPolicy",
+                "elasticfilesystem:DescribeFileSystemPolicy",
+                "elasticfilesystem:DescribeFileSystems",
+                "elasticfilesystem:DescribeLifecycleConfiguration",
+                "elasticfilesystem:DescribeMountTargets",
+                "elasticfilesystem:DescribeMountTargetSecurityGroups",
+                "elasticfilesystem:DescribeTags",
+                "elasticfilesystem:ListTagsForResource",
+                "events:DeleteRule",
+                "events:DescribeRule",
+                "events:ListTargetsByRule",
+                "events:PutRule",
+                "events:PutTargets",
+                "events:RemoveTargets",
+                "iam:GetInstanceProfile",
+                "iam:GetContextKeysForPrincipalPolicy",
+                "iam:GetRole",
+                "iam:ListAccountAliases",
+                "iam:ListInstanceProfilesForRole",
+                "iam:PassRole",
+                "iam:SimulatePrincipalPolicy",
+                "sns:CreateTopic",
+                "sns:DeleteTopic",
+                "sns:ListSubscriptionsByTopic",
+                "sns:ListTopics",
+                "sns:SetTopicAttributes",
+                "sns:Subscribe",
+                "sns:Unsubscribe",
+                "sqs:CreateQueue",
+                "sqs:DeleteMessage",
+                "sqs:DeleteQueue",
+                "sqs:ListQueues",
+                "sqs:ReceiveMessage",
+                "sqs:SetQueueAttributes",
+                "ssm:GetCommandInvocation",
+                "ssm:GetParameter",
+                "ssm:SendCommand"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:TerminateInstances",
+                "ec2:StartInstances"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/EfsIndexWorker": "EfsIndexWorker"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": "ec2:CreateTags",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:CreateAction": "RunInstances",
+                    "aws:RequestTag/EfsIndexWorker": "EfsIndexWorker"
+                }
+            }
+        }
+    ]
+}

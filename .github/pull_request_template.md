@@ -1,6 +1,6 @@
 # Pull Request Template
 
-By contributing, you agree that your contributions will be licensed under the projects original open source license.
+By contributing, you agree that your contributions will be licensed under the project's original open source license.
 
 ## Description
 
@@ -19,7 +19,7 @@ Fixes # (issue)
 
 Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
 
-### Checklist (check all applicable):
+### Checklist (check all applicable)
 
 * [ ] My code follows the style guidelines of this project
 * [ ] I have performed a self-review of my own code
