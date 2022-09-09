@@ -276,7 +276,7 @@ resource "aws_vpc_endpoint" "veeam_aws_s3_endpoint" {
   vpc_id            = aws_vpc.veeam_aws_vpc.id
   vpc_endpoint_type = "Gateway"
   service_name      = "com.amazonaws.${var.aws_region}.s3"
-  route_table_ids = [aws_route_table.veeam_aws_route_table.id]
+  route_table_ids   = [aws_route_table.veeam_aws_route_table.id]
 }
 
 resource "aws_eip" "veeam_aws_eip" {
@@ -285,7 +285,7 @@ resource "aws_eip" "veeam_aws_eip" {
 }
 
 resource "aws_eip_association" "veeam_aws_eip_association" {
-  count = var.elastic_ip ? 1 : 0
+  count         = var.elastic_ip ? 1 : 0
   instance_id   = aws_instance.veeam_aws_instance.id
   allocation_id = aws_eip.veeam_aws_eip[0].id
 }
@@ -362,7 +362,7 @@ data "aws_iam_policy_document" "veeam_aws_bucket_lockdown_policy_document" {
     ]
 
     condition {
-      test = "StringNotLike"
+      test     = "StringNotLike"
       variable = "aws:userId"
 
       values = [
@@ -383,5 +383,5 @@ output "veeam_aws_instance_id" {
 
 output "veeam_aws_instance_role_arn" {
   description = "The ARN of the instance role attached to the Veeam Backup for AWS EC2 instance"
-  value = aws_iam_role.veeam_aws_instance_role.arn
+  value       = aws_iam_role.veeam_aws_instance_role.arn
 }

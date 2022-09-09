@@ -3,7 +3,7 @@ variable "aws_region" {
   type        = string
 
   validation {
-    condition = contains(["us-east-1", "us-gov-east-1", "us-gov-west-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-south-1", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-east-1", "sa-east-1", "me-south-1", "af-south-1"], var.aws_region)
+    condition     = contains(["us-east-1", "us-gov-east-1", "us-gov-west-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-south-1", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-east-1", "sa-east-1", "me-south-1", "af-south-1"], var.aws_region)
     error_message = "Unsupported region. Please choose a supported region: us-east-1, us-gov-east-1, us-gov-west-1, us-east-2, us-west-1, us-west-2, ca-central-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-north-1, eu-south-1, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-east-1, sa-east-1, me-south-1, af-south-1"
   }
 }
@@ -53,12 +53,12 @@ variable "veeam_aws_edition" {
 
 variable "admin_role_id" {
   description = "Unique role ID of the IAM role (AROA*) that will have access to the Veeam S3 bucket"
-  type = string
+  type        = string
 }
 
 variable "admin_user_id" {
   description = "Unique user ID of the IAM user (AIDA*) that will have access to the Veeam S3 bucket"
-  type = string
+  type        = string
 }
 
 ### DO NOT EDIT THE FOLLOWING ami_map VARIABLES!
