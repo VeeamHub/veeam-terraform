@@ -330,6 +330,14 @@ resource "aws_s3_bucket_public_access_block" "veeam_aws_bucket_public_access_blo
   restrict_public_buckets = true
 }
 
+resource "aws_s3_bucket_ownership_controls" "veeam_aws_bucket_ownership_controls" {
+  bucket = aws_s3_bucket.veeam_aws_bucket.id
+
+  rule {
+    object_ownership = "BucketOwnerEnforced"
+  }
+}
+
 resource "aws_s3_bucket_policy" "veeam_aws_bucket_lockdown_policy" {
   bucket = aws_s3_bucket.veeam_aws_bucket.id
   policy = data.aws_iam_policy_document.veeam_aws_bucket_lockdown_policy_document.json
