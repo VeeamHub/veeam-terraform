@@ -56,7 +56,7 @@ variable "admin_role_id" {
   type = string
 }
 
-variable "user_id" {
+variable "admin_user_id" {
   description = "Unique user ID of the IAM user (AIDA*) that will have access to the Veeam S3 bucket"
   type = string
 }

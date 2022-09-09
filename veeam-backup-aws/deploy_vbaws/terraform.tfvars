@@ -24,8 +24,12 @@ veeam_aws_security_group = ""
 # Default is free.
 veeam_aws_edition = ""
 
-# Specify the role ID (will look like AROA*) for an IAM role which you want to have access to the bucket.
+# Specify the unique role ID (will look like AROA*) for an IAM role which you want to have access to the bucket.
+# You can obtain this value using the AWS CLI or AWS CloudShell by running the following command:
+# aws iam get-role --role-name <IAM role name> --query Role.RoleId
 admin_role_id = ""
 
 # Specify the unique user ID (will look like AIDA*) for an IAM user which you want to have access to the bucket.
-user_id = ""
+# You can obtain this value using the AWS CLI or AWS CloudShell by running the following command:
+# aws iam get-user --user-name <IAM user name> --query User.UserId
+admin_user_id = ""

@@ -359,7 +359,7 @@ data "aws_iam_policy_document" "veeam_aws_bucket_lockdown_policy_document" {
 
       values = [
         "${var.admin_role_id}:*",
-        var.user_id,
+        var.admin_user_id,
         "${aws_iam_role.veeam_aws_default_role.unique_id}:*"
       ]
     }
