@@ -2,7 +2,12 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.28"
+      version = "~> 4.30"
+    }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.4.3"
     }
   }
 
@@ -200,6 +205,57 @@ resource "aws_iam_role_policy_attachment" "veeam_aws_vpc_restore_policy_attachme
   policy_arn = aws_iam_policy.veeam_aws_vpc_restore_policy.arn
 }
 
+resource "aws_iam_role" "veeam_aws_dlm_role" {
+  name = "veeam-aws-dlm-role"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",      
+      "Principal": {
+        "Service": "dlm.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "veeam_aws_dlm_role_policy" {
+  name = "veeam-aws-dlm-role-policy"
+  role = aws_iam_role.veeam_aws_dlm_role.id
+
+  policy = <<EOF
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Action": [
+            "ec2:CreateSnapshot",
+            "ec2:CreateSnapshots",
+            "ec2:DescribeInstances",
+            "ec2:DescribeVolumes",
+            "ec2:DescribeSnapshots"
+         ],
+         "Resource": "*"
+      },
+      {
+         "Effect": "Allow",
+         "Action": [
+            "ec2:CreateTags",
+            "ec2:DeleteSnapshot"
+         ],
+         "Resource": "arn:aws:ec2:*::snapshot/*"
+      }
+   ]
+}
+EOF
+}
+
 ### VPC Resources
 
 resource "aws_vpc" "veeam_aws_vpc" {
@@ -306,19 +362,82 @@ resource "aws_instance" "veeam_aws_instance" {
   user_data = join("\n", [aws_iam_role.veeam_aws_instance_role.arn, aws_iam_role.veeam_aws_default_role.arn])
 }
 
+### CloudWatch alarms and Data Lifecycle Manager policy
+
+resource "aws_cloudwatch_metric_alarm" "veeam_aws_recovery_alarm" {
+  alarm_name          = "veeam-aws-recovery-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "StatusCheckFailed_System"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "0"
+  alarm_description   = "Trigger a recovery when system status check fails for 15 consecutive minutes."
+  alarm_actions       = ["arn:aws:automate:${var.aws_region}:ec2:recover"]
+  dimensions          = { InstanceId : aws_instance.veeam_aws_instance.id }
+}
+
+resource "aws_cloudwatch_metric_alarm" "veeam_aws_reboot_alarm" {
+  alarm_name          = "veeam-aws-reboot-alarm"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "3"
+  metric_name         = "StatusCheckFailed_Instance"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "0"
+  alarm_description   = "Trigger a reboot when instance status check fails for 3 consecutive minutes."
+  alarm_actions       = ["arn:aws:automate:${var.aws_region}:ec2:reboot"]
+  dimensions          = { InstanceId : aws_instance.veeam_aws_instance.id }
+}
+
+resource "aws_dlm_lifecycle_policy" "veeam_aws_dlm_lifecycle_policy" {
+  description        = "DLM policy for the Veeam Backup for AWS EC2 instance"
+  execution_role_arn = aws_iam_role.veeam_aws_dlm_role.arn
+  state              = "ENABLED"
+
+  policy_details {
+    resource_types = ["INSTANCE"]
+
+    schedule {
+      name = "Daily snapshots"
+
+      create_rule {
+        interval      = 12
+        interval_unit = "HOURS"
+        times         = ["03:00"]
+      }
+
+      retain_rule {
+        count = 1
+      }
+
+      tags_to_add = {
+        type = "VcbDailySnapshot"
+      }
+
+      copy_tags = true
+    }
+
+    target_tags = {
+      Name = "veeam-aws-demo"
+    }
+  }
+}
+
 ### S3 bucket to store Veeam backups
 
+resource "random_id" "veeam_aws_bucket_name_random_suffix" {
+  byte_length = 8
+}
+
 resource "aws_s3_bucket" "veeam_aws_bucket" {
-  bucket = "veeam-aws-bucket-demo"
+  bucket = "veeam-aws-bucket-demo-${lower(random_id.veeam_aws_bucket_name_random_suffix.hex)}"
 
   force_destroy = true
   # IMPORTANT! The bucket and all contents will be deleted upon running a `terraform destory` command
 
-}
-
-resource "aws_s3_bucket_acl" "veeam_aws_bucket_acl" {
-  bucket = aws_s3_bucket.veeam_aws_bucket.id
-  acl    = "private"
 }
 
 resource "aws_s3_bucket_public_access_block" "veeam_aws_bucket_public_access_block" {
@@ -384,4 +503,9 @@ output "veeam_aws_instance_id" {
 output "veeam_aws_instance_role_arn" {
   description = "The ARN of the instance role attached to the Veeam Backup for AWS EC2 instance"
   value       = aws_iam_role.veeam_aws_instance_role.arn
+}
+
+output "veeam_aws_bucket_name" {
+  description = "The name of the provisioned S3 bucket"
+  value       = aws_s3_bucket.veeam_aws_bucket.id
 }
