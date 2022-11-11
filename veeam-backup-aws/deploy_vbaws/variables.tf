@@ -51,13 +51,13 @@ variable "veeam_aws_edition" {
   }
 }
 
-variable "admin_role_id" {
-  description = "Unique role ID of the IAM role (AROA*) that will have access to the Veeam S3 bucket"
+variable "admin_role" {
+  description = "Name of the IAM role that will have access to the Veeam S3 bucket"
   type        = string
 }
 
-variable "admin_user_id" {
-  description = "Unique user ID of the IAM user (AIDA*) that will have access to the Veeam S3 bucket"
+variable "admin_user" {
+  description = "Name of the IAM user that will have access to the Veeam S3 bucket"
   type        = string
 }
 

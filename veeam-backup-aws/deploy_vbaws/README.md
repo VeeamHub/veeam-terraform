@@ -40,7 +40,7 @@ This folder contains a sample project for deploying Veeam Backup for AWS using T
    >
    > Use special care and attention with these values as incorrect usage could result in the deployment creating a bucket which is inaccessible by anyone except the account's root user. Refer to the following AWS support article if you encounter issues: [Regain access to an Amazon S3 bucket](https://aws.amazon.com/premiumsupport/knowledge-center/s3-accidentally-denied-access/)
    >
-   > Alternatively, you can remove the bucket policy resource from `main.tf` and the `admin_role_id` and `admin_user_id` variables in `variables.tf`.
+   > Alternatively, you can remove the bucket lockdown configuration from `main.tf` and the `admin_role` and `admin_user` variables in `variables.tf`.
 
 1) The deployment includes multiple IAM managed policies that are attached to the `veeam-aws-default-role` IAM role. These policies allow you to perform backup and restore operations for all supported AWS services. More details on the policies are located in the [IAM Permissions](https://helpcenter.veeam.com/docs/vbaws/guide/system_requirements_permissions.html) section of the Veeam Backup for AWS user guide.
 
@@ -70,6 +70,8 @@ This folder contains a sample project for deploying Veeam Backup for AWS using T
    > **IMPORTANT**
    >
    > The bucket created by this deployment and all its contents will be deleted permanently upon running the `destroy` command.
+   >
+   > If you would like to keep the data after destroying the deployment, remove the force_destroy property from the bucket resource definition.
    >
    > Follow the instructions in the [Managing Backed-Up Data](https://helpcenter.veeam.com/docs/vbaws/guide/backups_view.html) section in the Veeam Backup for AWS user guide to remove any snapshots _before_ you run the `destroy` command. The `destroy` command does not remove any snapshots that are created during the testing of backup policies.
 

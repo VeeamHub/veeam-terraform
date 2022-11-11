@@ -15,7 +15,7 @@ terraform {
 }
 
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
 }
 
 locals {
@@ -457,9 +457,19 @@ resource "aws_s3_bucket_ownership_controls" "veeam_aws_bucket_ownership_controls
   }
 }
 
+### S3 bucket lockdown
+
 resource "aws_s3_bucket_policy" "veeam_aws_bucket_lockdown_policy" {
   bucket = aws_s3_bucket.veeam_aws_bucket.id
   policy = data.aws_iam_policy_document.veeam_aws_bucket_lockdown_policy_document.json
+}
+
+data "aws_iam_role" "admin_role_id" {
+  name = var.admin_role
+}
+
+data "aws_iam_user" "admin_user_id" {
+  user_name = var.admin_user
 }
 
 data "aws_iam_policy_document" "veeam_aws_bucket_lockdown_policy_document" {
@@ -485,8 +495,8 @@ data "aws_iam_policy_document" "veeam_aws_bucket_lockdown_policy_document" {
       variable = "aws:userId"
 
       values = [
-        "${var.admin_role_id}:*",
-        var.admin_user_id,
+        "${data.aws_iam_role.admin_role_id.unique_id}:*",
+        data.aws_iam_user.admin_user_id.user_id,
         "${aws_iam_role.veeam_aws_default_role.unique_id}:*"
       ]
     }
