@@ -4,7 +4,7 @@ variable "aws_region" {
 
   validation {
     condition     = contains(["us-east-1", "us-gov-east-1", "us-gov-west-1", "us-east-2", "us-west-1", "us-west-2", "ca-central-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-north-1", "eu-south-1", "ap-southeast-1", "ap-southeast-2", "ap-southeast-3", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-east-1", "sa-east-1", "me-south-1", "af-south-1"], var.aws_region)
-    error_message = "Unsupported region. Please choose a supported region: us-east-1, us-gov-east-1, us-gov-west-1, us-east-2, us-west-1, us-west-2, ca-central-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-north-1, eu-south-1, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-east-1, sa-east-1, me-south-1, af-south-1"
+    error_message = "Unsupported region. Please choose a supported region: us-east-1, us-gov-east-1, us-gov-west-1, us-east-2, us-west-1, us-west-2, ca-central-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-north-1, eu-south-1, ap-southeast-1, ap-southeast-2, ap-southeast-3, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-east-1, sa-east-1, me-south-1, af-south-1 ."
   }
 }
 
@@ -15,7 +15,7 @@ variable "veeam_aws_instance_type" {
 
   validation {
     condition     = contains(["t2.medium", "t2.large", "t2.xlarge", "t2.2xlarge", "t3.medium", "t3.large", "t3.xlarge", "t3.2xlarge", "c5.large", "c5.2xlarge", "c5.4xlarge", "c5.9xlarge"], var.veeam_aws_instance_type)
-    error_message = "Unsupported instance type. Please choose a supported instance type from the following list: t2.medium, t2.large, t2.xlarge, t2.2xlarge, t3.medium, t3.large, t3.xlarge, t3.2xlarge, c5.large, c5.2xlarge, c5.4xlarge, c5.9xlarge"
+    error_message = "Unsupported instance type. Please choose a supported instance type from the following list: t2.medium, t2.large, t2.xlarge, t2.2xlarge, t3.medium, t3.large, t3.xlarge, t3.2xlarge, c5.large, c5.2xlarge, c5.4xlarge, c5.9xlarge ."
   }
 }
 
