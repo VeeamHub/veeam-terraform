@@ -519,3 +519,8 @@ output "veeam_aws_bucket_name" {
   description = "The name of the provisioned S3 bucket"
   value       = aws_s3_bucket.veeam_aws_bucket.id
 }
+
+output "veeam_aws_instance_public_ip" {
+  description = "The public IP address of the Veeam Backup for AWS EC2 instance"
+  value       = aws_instance.veeam_aws_instance.public_ip
+}
