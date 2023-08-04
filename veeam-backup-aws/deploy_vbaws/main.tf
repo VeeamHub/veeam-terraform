@@ -18,11 +18,24 @@ provider "aws" {
   region  = var.aws_region
 }
 
+## Get AMI IDs using AMI alias from SSM parameter store
+
+data "aws_ssm_parameter" "veeam_aws_instance_ami_free" {
+  name = "/aws/service/marketplace/prod-i6cc2jepj6py2/6.1.0.25"
+}
+
+data "aws_ssm_parameter" "veeam_aws_instance_ami_byol" {
+  name = "/aws/service/marketplace/prod-66kpsz7advwp4/6.1.0.25"
+}
+
+data "aws_ssm_parameter" "veeam_aws_instance_ami_paid" {
+  name = "/aws/service/marketplace/prod-amqo533wfzacq/6.1.0.25"
+}
+
+## Set AMI ID value based on veeam_aws_edition variable
+
 locals {
-  veeam_aws_instance_ami      = var.veeam_aws_edition == "byol" ? local.veeam_aws_instance_ami_byol : (var.veeam_aws_edition == "free" ? local.veeam_aws_instance_ami_free : local.veeam_aws_instance_ami_paid)
-  veeam_aws_instance_ami_free = lookup(var.veeam_aws_free_edition_ami_map, var.aws_region)
-  veeam_aws_instance_ami_byol = lookup(var.veeam_aws_byol_edition_ami_map, var.aws_region)
-  veeam_aws_instance_ami_paid = lookup(var.veeam_aws_paid_edition_ami_map, var.aws_region)
+  veeam_aws_instance_ami      = var.veeam_aws_edition == "byol" ? data.aws_ssm_parameter.veeam_aws_instance_ami_byol.value : (var.veeam_aws_edition == "free" ? data.aws_ssm_parameter.veeam_aws_instance_ami_free.value : data.aws_ssm_parameter.veeam_aws_instance_ami_paid.value)
 }
 
 ### IAM Resources
