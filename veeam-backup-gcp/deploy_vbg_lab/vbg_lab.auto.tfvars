@@ -101,7 +101,7 @@ boot_disk_image_web_app = "projects/bitnami-launchpad/global/images/bitnami-word
 ### VBG VM instance ###
 # machine_type_vbg = ""     # just in case - will not deploy VBG VM instance 
 machine_type_vbg = "e2-standard-2"
-boot_disk_image_vbg = "projects/veeam-marketplace-public/global/images/veeam-backup-gcp-30-ubuntu2004-20221104"
+boot_disk_image_vbg = "projects/veeam-marketplace-public/global/images/veeam-backup-gcp-40-ubuntu2004-20230210"
 data_disk_type = "pd-ssd"
 data_disk_size = 20
 
