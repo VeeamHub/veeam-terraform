@@ -6,7 +6,7 @@ This folder contains a sample project for managing S3 credentials in Veeam with 
 
 ## Requirements
 
-- [Terraform](https://www.terraform.io/downloads) (>= 1.4)
+- [Terraform](https://developer.hashicorp.com/terraform/install)
 - AWS account [configured for use with Terraform](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration)
 
 ## Walkthrough
@@ -29,11 +29,11 @@ This folder contains a sample project for managing S3 credentials in Veeam with 
    terraform init
    ```
 
-1) You will need to supply 3 variables to Terraform to run the deployment:
+1) You will need to supply 3 variables inside the `terraform.tfvars` file to run the deployment:
 
-   1) AWS region where you want to create your S3 bucket
-   1) IP address of your VBR server
    1) Access token for your VBR REST API
+   1) IP address of your VBR server
+   1) AWS region where you want to create your S3 bucket
 
    For details on how to generate an access token for the VBR REST API, visit the [Veeam Backup & Replication REST API Reference Guide](https://helpcenter.veeam.com/docs/backup/vbr_rest/requesting_authorization.html).
 
@@ -53,7 +53,7 @@ This folder contains a sample project for managing S3 credentials in Veeam with 
 
    When you rotate the access key in AWS, it will also update the cloud credential in Veeam Backup & Replication.
 
-1) If you would like to remove the resources, run the [destroy](https://www.terraform.io/cli/commands/destroy) command to delete all resources that were created in the deployment, including the cloud credential in Veeam Backup & Replication.
+1) If you would like to remove the resources, run the [destroy](https://developer.hashicorp.com/terraform/cli/commands/destroy) command to delete all resources that were created in the deployment, including the cloud credential in Veeam Backup & Replication.
 
    > **IMPORTANT**
    >

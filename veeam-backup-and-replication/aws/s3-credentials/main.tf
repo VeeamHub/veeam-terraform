@@ -2,12 +2,12 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.61"
+      version = "~> 6.0"
     }
 
     restapi = {
       source  = "Mastercard/restapi"
-      version = "~> 1.18.0"
+      version = "~> 2.0"
     }
   }
 
@@ -29,7 +29,7 @@ provider "restapi" {
   headers = {
     "Authorization" = "Bearer ${var.vbr_access_token}"
     "Content-Type"  = "application/json"
-    "x-api-version" = "1.1-rev0" #v12 REST API version
+    "x-api-version" = "1.2-rev1"
   }
 
   test_path = "/api/v1/serverTime"
@@ -49,7 +49,6 @@ variable "vbr_ip" {
 variable "aws_region" {
   type = string
 }
-
 
 ## S3 resources
 
@@ -141,7 +140,7 @@ resource "aws_iam_access_key" "veeam_s3_repo_user_access_key" {
 
 ## IAM policies for EC2 helper appliance for S3 repositories
 
-resource "aws_iam_policy" "veeam_ec2_helper_policy" { #
+resource "aws_iam_policy" "veeam_ec2_helper_policy" {
   name = "veeam-ec2-helper-policy"
   path = "/"
   policy = jsonencode({
